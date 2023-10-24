@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 // Define the MongoDB connection URL
 const mongoURI = "mongodb://mongo:27017/test"
 
+mongoose.set("strictQuery", false);
+
 // Create a function to establish the Mongoose connection
 const connectToDatabase = async () => {
   try {
@@ -17,6 +19,6 @@ const connectToDatabase = async () => {
 };
 
 // Export the connectToDatabase function
-module.exports = connectToDatabase;
+module.exports = {connectToDatabase, mongoose};
 
 

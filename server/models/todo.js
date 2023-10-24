@@ -18,5 +18,4 @@ const todoSchema = new mongoose.Schema({
 
 
 const Todo = mongoose.model('Todo', todoSchema);
-console.log( "Todo in todo.js", typeof Todo)
 module.exports = Todo;
