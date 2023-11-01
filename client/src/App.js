@@ -1,31 +1,22 @@
-import { useState, useEffect } from "react";
-
+import get_all_todos from "./api/readTodoRequests";
+import "./style/App.css";
+import { useQuery } from "react-query";
+import Cliploader from "react-spinners/ClipLoader";
+import { TodoAll } from "./components/TodoAll";
 
 export default function App() {
-  const [backendData, setbackendDat] = useState([]);
-
-  useEffect(() => {
-    fetch("/todos")
-      .then(res => res.json())
-      .then(data => {
-        setbackendDat(data)
-        console.log(data);
-        return data
-      })
-  }, []);
-
-
-  return(
+  const { isLoading, data: todos } = useQuery("todos", get_all_todos);
+  return (
     <div>
-      {(typeof backendData[0] ==='undefined') ? (
-        <p>Loading...</p>
+      {isLoading ? (
+        <Cliploader size={150} />
       ) : (
         <ul>
-        {backendData.map((item) => (
-          <li key={item._id}>{item._id}</li>
-        ))}
+          {todos.map((item) => (
+            <TodoAll item={item} key={item._id} />
+          ))}
         </ul>
       )}
     </div>
-  )
+  );
 }
