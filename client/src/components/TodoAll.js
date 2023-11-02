@@ -1,16 +1,24 @@
 import React from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { updateTodo } from "../api/updateTodoRequests";
+
+
 export const TodoAll = (props) => {
+
+  const queryClient = useQueryClient()
+
   const { mutate: toggleCompletion } = useMutation(() => {
-    console.log({ ...props, todoCompleted: !props.item.todoCompleted })
-    return updateTodo({ ...props, todoCompleted: !props.item.todoCompleted });
+    return updateTodo({ ...props.item, todoCompleted: !props.item.todoCompleted });
+  }, {
+    onSettled: () => {
+      queryClient.invalidateQueries('todos')
+    }
   });
 
   return (
     <div className="listContainer">
       <input
-        checked={props.todoCompleted}
+        checked={props.item.todoCompleted}
         type="checkbox"
         onChange={toggleCompletion}
       />

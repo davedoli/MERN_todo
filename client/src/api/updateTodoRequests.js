@@ -1,12 +1,11 @@
 export const updateTodo = function (todo) {
-    console.log('went to updateToDo')
-    console.log(todo.item._id)
-  return fetch(`/todos/${todo.item._id}`, {
+  console.log("todocompleted in updateTodo");
+  console.log(JSON.stringify(todo));
+  return fetch(`/todos/${todo._id}`, {
     method: "PUT",
-    body: JSON.stringify({
-      todoDescription: todo.todoDescription,
-      todoCompleted: todo.todoCompleted,
-      todoPriority: todo.todoPriority,
-    }),
+    headers: {
+        'Content-Type': 'application/json', // Set to match the data format
+      },
+    body: JSON.stringify(todo),
   }).then((response) => response.json());
 };

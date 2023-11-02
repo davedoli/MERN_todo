@@ -6,7 +6,6 @@ exports.homepage = async function (req, res) {
 
 exports.list_all_todos = async (req, res) => {
     const alltodos = await Todo.find();
-    await new Promise(resolve => setTimeout(resolve, 2000));
     return res.status(200).json(alltodos);
   }
 
@@ -41,8 +40,6 @@ exports.delete_todo = async (req, res) => {
 }
 
 exports.update_todo = async (req, res) => {
-  console.log('test in server')
-  console.log(req.params);
   const { id } = req.params;
   const todo = await Todo.findByIdAndUpdate(id, req.body, { new: true });
   return res.status(200).json(todo);
